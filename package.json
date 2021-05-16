@@ -1,0 +1,33 @@
+{
+  "name": "integreat-queue-rabbitmq",
+  "version": "0.1.0",
+  "description": "RabbitMQ queue for Integreat",
+  "author": "Kjell-Morten Bratsberg Thorsen <kjellmorten@integreat.io>",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "npm run build && nyc --reporter=text-summary ava --config ./ava-dist.config.js",
+    "test:inspect": "node --inspect node_modules/ava/profile.js",
+    "test:watch": "npm run dev",
+    "dev": "ava --watch",
+    "build": "tsc",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "nyc:report": "nyc report --reporter=text --reporter=html",
+    "lint": "eslint --ext .ts src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/integreat-io/integreat-queue-rabbitmq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/integreat-io/integreat-queue-rabbitmq/issues"
+  },
+  "homepage": "https://github.com/integreat-io/integreat-queue-rabbitmq#readme",
+  "engines": {
+    "node": ">= 14"
+  },
+  "dependencies": {
+    "@integreat/ts-dev-setup": "^2.0.1"
+  }
+}
