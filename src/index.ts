@@ -112,5 +112,26 @@ export default async function (options: Options) {
         await channel.cancel(consumerTag)
       }
     },
+
+    /**
+     * Clean completed jobs. Has no implementation for RabbitMQ, as completed
+     * jobs are never kept.
+     */
+    async clean(_ms = 0) {},
+
+    /**
+     * Flush all queued jobs waiting in the queue.
+     */
+    async flush() {
+      await channel.purgeQueue(queueName)
+    },
+
+    /**
+     * Close the queue. Has no implementation for RabbitMQ, as there is really
+     * no need to close the connection. It is possible to close a channel, but
+     * that will require us to unbind the queue from the exchange, which again
+     * may affect other subscribers. It's better to do nothing.
+     */
+    async close() {},
   }
 }
