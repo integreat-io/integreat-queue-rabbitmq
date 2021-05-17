@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - '14'
-os: osx
 after_success: npm run coverage
 notifications:
   email:
@@ -11,5 +10,9 @@ notifications:
     on_failure: always # default: always
 services:
   - rabbitmq
+addons:
+  apt:
+    packages:
+      - rabbitmq-server
 env:
   - RABBITMQ_USERNAME=guest RABBITMQ_PASSWORD=guest
