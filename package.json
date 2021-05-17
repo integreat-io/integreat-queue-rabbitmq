@@ -1,7 +1,7 @@
 {
   "name": "integreat-queue-rabbitmq",
   "version": "0.1.0",
-  "description": "RabbitMQ queue for Integreat",
+  "description": "RabbitMQ queue for Integreat – based on amqp.node",
   "author": "Kjell-Morten Bratsberg Thorsen <kjellmorten@integreat.io>",
   "license": "ISC",
   "main": "dist/index.js",
