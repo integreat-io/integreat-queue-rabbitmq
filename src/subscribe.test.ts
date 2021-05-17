@@ -164,3 +164,10 @@ test('should unsubscribe from queue', async (t) => {
 
   await t.context.channel.purgeQueue(queueName)
 })
+
+test('should do nothing when unsubscribe is attempted without queue name', async (t) => {
+  const queueName = 'testQueueUnsubscribe2'
+  const q = await createQueue({ queueName, rabbitmq: rabbitOptions })
+
+  await t.notThrowsAsync(q.unsubscribe(null))
+})
