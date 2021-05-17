@@ -1,5 +1,4 @@
 import ava, { TestInterface } from 'ava'
-import sinon = require('sinon')
 import amqp = require('amqplib')
 
 import createQueue from '.'
