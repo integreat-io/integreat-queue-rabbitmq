@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - '14'
+after_success: npm run coverage
+notifications:
+  email:
+    recipients:
+      - kjellmorten@integreat.io
+    on_success: never # default: change
+    on_failure: always # default: always
+services:
+  - rabbitmq
