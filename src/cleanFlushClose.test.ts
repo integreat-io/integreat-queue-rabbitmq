@@ -23,6 +23,8 @@ const action = {
 const rabbitOptions = {
   hostname: 'localhost',
   port: 5672,
+  username: process.env.RABBITMQ_USERNAME || undefined,
+  password: process.env.RABBITMQ_PASSWORD || undefined,
 }
 
 test.before(async (t) => {

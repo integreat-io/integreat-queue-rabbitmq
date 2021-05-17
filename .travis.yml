@@ -10,3 +10,6 @@ notifications:
     on_failure: always # default: always
 services:
   - rabbitmq
+env:
+  - RABBITMQ_USERNAME=guest
+  - RABBITMQ_PASSWORD=guest
