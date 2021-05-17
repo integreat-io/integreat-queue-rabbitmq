@@ -98,7 +98,7 @@ test('should throw when handler is not a function', async (t) => {
 test('should have maxConcurrency = 1 as default', async (t) => {
   const queueName = 'testQueueSubscribe5'
   const handler = sinon.stub().callsFake(async function () {
-    await wait(1000)
+    await wait(300)
     return {
       ...action,
       response: { status: 'ok', data: [] },
@@ -114,13 +114,14 @@ test('should have maxConcurrency = 1 as default', async (t) => {
   t.is(handler.callCount, 1)
 
   q.unsubscribe(handle)
+  await wait(500)
   await t.context.channel.purgeQueue(queueName)
 })
 
 test('should use given maxConcurrency', async (t) => {
   const queueName = 'testQueueSubscribe6'
   const handler = sinon.stub().callsFake(async function () {
-    await wait(1000)
+    await wait(300)
     return {
       ...action,
       response: { status: 'ok', data: [] },
@@ -140,6 +141,7 @@ test('should use given maxConcurrency', async (t) => {
   t.is(handler.callCount, 2)
 
   q.unsubscribe(handle)
+  await wait(500)
   await t.context.channel.purgeQueue(queueName)
 })
 
