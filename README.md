@@ -21,6 +21,22 @@ Install from npm:
 npm install integreat-queue-rabbitmq
 ```
 
+#### Options
+
+- `queueName` is used directly as the queue name in RabbitMQ. An exchange is
+  created with the name `<queueName>_exch`.
+- `maxConcurrency` specifies how many jobs may be picked from the queue before
+  any of them is completed (acknowledged or rejected). Default is `1`, meaning
+  a new job will not be picked until the current one is done. Note that for
+  RabbitMQ v3.3.0 and later, this is limited to a channel, i.e. one instance
+  of an Integreat queue, so with a `maxConcurrency` of 1 on several instances,
+  each one may pick one job. In versions before v3.3.0, only one job could be
+  picked across all subscribers.
+- `rabbitmq` may be an url string or the options object required by the
+  [`connect()`](http://www.squaremobius.net/amqp.node/channel_api.html#connect)
+  method of the `amqp` client. The most common props of this object are
+  `hostname`, `port`, `username`, and `password`.
+
 ### Running the tests
 
 The tests can be run with `npm test`.

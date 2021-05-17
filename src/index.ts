@@ -9,12 +9,8 @@ export const isObject = (value: unknown): value is Record<string, unknown> =>
 
 export interface Options {
   queueName: string
-  rabbitmq: {
-    hostname?: string
-    port?: number
-    username?: string
-    password?: string
-  }
+  maxConcurrency?: number
+  rabbitmq: amqp.Options.Connect | string
 }
 
 export interface Action {
@@ -55,8 +51,6 @@ const callHandler = (handler: Handler, channel: amqp.Channel) =>
     }
   }
 
-// TODO: maxConcurrency
-
 /**
  * Create and return an Integreat queue for RabbitMQ. The options are an object
  * with `queueName` and a `rabbitmq` options object. The latter will be passed
@@ -71,6 +65,7 @@ export default async function (options: Options) {
   await channel.assertExchange(exchName, 'direct', { durable: true })
   await channel.assertQueue(queueName, { durable: true })
   channel.bindQueue(queueName, exchName, '')
+  channel.prefetch(options.maxConcurrency ?? 1)
 
   return {
     /**

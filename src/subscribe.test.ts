@@ -95,6 +95,54 @@ test('should throw when handler is not a function', async (t) => {
   await t.throwsAsync(q.subscribe(handler as any))
 })
 
+test('should have maxConcurrency = 1 as default', async (t) => {
+  const queueName = 'testQueueSubscribe5'
+  const handler = sinon.stub().callsFake(async function () {
+    await wait(1000)
+    return {
+      ...action,
+      response: { status: 'ok', data: [] },
+    }
+  })
+  const q = await createQueue({ queueName, rabbitmq: rabbitOptions })
+
+  const handle = await q.subscribe(handler)
+  await q.push(action)
+  await q.push(action)
+
+  await wait(200)
+  t.is(handler.callCount, 1)
+
+  q.unsubscribe(handle)
+  await t.context.channel.purgeQueue(queueName)
+})
+
+test('should use given maxConcurrency', async (t) => {
+  const queueName = 'testQueueSubscribe6'
+  const handler = sinon.stub().callsFake(async function () {
+    await wait(1000)
+    return {
+      ...action,
+      response: { status: 'ok', data: [] },
+    }
+  })
+  const q = await createQueue({
+    queueName,
+    maxConcurrency: 2,
+    rabbitmq: rabbitOptions,
+  })
+
+  const handle = await q.subscribe(handler)
+  await q.push(action)
+  await q.push(action)
+
+  await wait(200)
+  t.is(handler.callCount, 2)
+
+  q.unsubscribe(handle)
+  await t.context.channel.purgeQueue(queueName)
+})
+
 // Tests -- unsubscribe
 
 test('should unsubscribe from queue', async (t) => {
