@@ -11,5 +11,4 @@ notifications:
 services:
   - rabbitmq
 env:
-  - RABBITMQ_USERNAME=guest
-  - RABBITMQ_PASSWORD=guest
+  - RABBITMQ_USERNAME=guest RABBITMQ_PASSWORD=guest
